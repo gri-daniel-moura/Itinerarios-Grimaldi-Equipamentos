@@ -4,6 +4,8 @@ import { pdfFiles, auditLogs } from '@/lib/schema';
 import { eq, desc } from 'drizzle-orm';
 import { cookies } from 'next/headers';
 import { verifyToken } from '@/lib/auth';
+import { revalidatePath } from 'next/cache';
+import { locations } from '@/lib/schema';
 
 async function getAdminEmail(): Promise<string> {
   const token = cookies().get('admin_token')?.value;
@@ -60,6 +62,12 @@ export async function POST(req: Request) {
       performedBy: adminEmail,
     });
 
+    revalidatePath('/');
+    
+    // Get location slug to revalidate that page too
+    const [loc] = await db.select().from(locations).where(eq(locations.id, newPdf.locationId)).limit(1);
+    if (loc) revalidatePath(`/${loc.slug}`);
+
     return NextResponse.json(newPdf);
   } catch {
     return NextResponse.json({ error: 'Failed to create PDF record' }, { status: 500 });
@@ -91,6 +99,11 @@ export async function PUT(req: Request) {
       performedBy: adminEmail,
     });
 
+    revalidatePath('/');
+    
+    const [loc] = await db.select().from(locations).where(eq(locations.id, updated.locationId)).limit(1);
+    if (loc) revalidatePath(`/${loc.slug}`);
+
     return NextResponse.json(updated);
   } catch {
     return NextResponse.json({ error: 'Failed to update PDF' }, { status: 500 });
@@ -112,6 +125,11 @@ export async function DELETE(req: Request) {
       entityId: deleted.id,
       performedBy: adminEmail,
     });
+
+    revalidatePath('/');
+    
+    const [loc] = await db.select().from(locations).where(eq(locations.id, deleted.locationId)).limit(1);
+    if (loc) revalidatePath(`/${loc.slug}`);
 
     return NextResponse.json({ success: true, deleted });
   } catch {

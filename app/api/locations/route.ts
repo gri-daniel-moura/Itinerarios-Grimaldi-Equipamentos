@@ -4,6 +4,7 @@ import { locations, auditLogs } from '@/lib/schema';
 import { eq } from 'drizzle-orm';
 import { cookies } from 'next/headers';
 import { verifyToken } from '@/lib/auth';
+import { revalidatePath } from 'next/cache';
 
 function slugify(text: string) {
   return text.toString().toLowerCase()
@@ -47,6 +48,7 @@ export async function POST(req: Request) {
       performedBy: adminEmail,
     });
 
+    revalidatePath('/');
     return NextResponse.json(newLocation);
   } catch (error: unknown) {
     if (error && typeof error === 'object' && 'code' in error && error.code === '23505') {
@@ -73,6 +75,8 @@ export async function PUT(req: Request) {
       performedBy: adminEmail,
     });
 
+    revalidatePath('/');
+    revalidatePath(`/${updated.slug}`);
     return NextResponse.json(updated);
   } catch {
     return NextResponse.json({ error: 'Failed to update location' }, { status: 500 });
@@ -95,6 +99,8 @@ export async function DELETE(req: Request) {
       performedBy: adminEmail,
     });
 
+    revalidatePath('/');
+    revalidatePath(`/${deleted.slug}`);
     return NextResponse.json({ success: true, deleted });
   } catch {
     return NextResponse.json({ error: 'Failed to delete location. It may be in use.' }, { status: 500 });
