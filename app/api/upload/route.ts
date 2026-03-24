@@ -10,7 +10,7 @@ export async function POST(request: Request): Promise<NextResponse> {
     const jsonResponse = await handleUpload({
       body,
       request,
-      onBeforeGenerateToken: async (pathname) => {
+      onBeforeGenerateToken: async (_pathname) => {
         // Only allow authenticated admins to upload
         const adminToken = cookies().get('admin_token')?.value;
         if (!adminToken) throw new Error('Unauthorized');
@@ -34,7 +34,7 @@ export async function POST(request: Request): Promise<NextResponse> {
     });
 
     return NextResponse.json(jsonResponse);
-  } catch (error: any) {
+  } catch (error: unknown) {
     return NextResponse.json(
       { error: (error as Error).message },
       { status: 400 } // The webhook will retry 5 times waiting for a 200

@@ -1,6 +1,6 @@
 import { jwtVerify, SignJWT } from 'jose';
 
-export async function signToken(payload: any) {
+export async function signToken(payload: Record<string, unknown>) {
   const secret = new TextEncoder().encode(process.env.JWT_SECRET || 'fallback-secret-for-dev');
   return new SignJWT(payload)
     .setProtectedHeader({ alg: 'HS256' })
@@ -14,7 +14,7 @@ export async function verifyToken(token: string) {
   try {
     const { payload } = await jwtVerify(token, secret);
     return payload;
-  } catch (error) {
+  } catch (_error) {
     return null;
   }
 }

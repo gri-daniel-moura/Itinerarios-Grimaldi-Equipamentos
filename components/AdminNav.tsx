@@ -1,6 +1,7 @@
 "use client";
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { LayoutDashboard, MapPin, FileText, UploadCloud, LogOut } from 'lucide-react';
 
@@ -16,8 +17,8 @@ export default function AdminNav() {
 
   return (
     <div className="w-64 bg-blue-600 text-white min-h-screen flex flex-col hidden md:flex">
-      <div className="p-4 border-b border-slate-800 bg-white">
-        <img src="/GrimaldiLogo.jpg" alt="Grimaldi Logo" className="h-12 w-auto mx-auto rounded" />
+      <div className="p-4 border-b border-slate-800 bg-white flex justify-center">
+        <Image src="/GrimaldiLogo.jpg" alt="Grimaldi Logo" width={120} height={48} className="h-12 w-auto rounded" />
       </div>
       <nav className="flex-1 p-4 space-y-2">
         {navItems.map((item) => {

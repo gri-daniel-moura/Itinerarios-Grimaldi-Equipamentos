@@ -18,7 +18,7 @@ export async function GET(req: Request) {
     const locationId = searchParams.get('locationId');
     const includeInactive = searchParams.get('includeInactive') === 'true'; // Admin needs inactive too
 
-    let query = db.select().from(pdfFiles);
+    const query = db.select().from(pdfFiles);
 
     // Apply filters via where clauses (Drizzle builder pattern trick: just build results, or use eq properly)
     let results = await query.orderBy(desc(pdfFiles.createdAt));
@@ -31,7 +31,7 @@ export async function GET(req: Request) {
     }
 
     return NextResponse.json(results);
-  } catch (error) {
+  } catch (_error) {
     return NextResponse.json({ error: 'Failed to fetch PDFs' }, { status: 500 });
   }
 }
@@ -61,7 +61,7 @@ export async function POST(req: Request) {
     });
 
     return NextResponse.json(newPdf);
-  } catch (error) {
+  } catch (_error) {
     return NextResponse.json({ error: 'Failed to create PDF record' }, { status: 500 });
   }
 }
@@ -92,7 +92,7 @@ export async function PUT(req: Request) {
     });
 
     return NextResponse.json(updated);
-  } catch (error) {
+  } catch (_error) {
     return NextResponse.json({ error: 'Failed to update PDF' }, { status: 500 });
   }
 }
@@ -114,7 +114,7 @@ export async function DELETE(req: Request) {
     });
 
     return NextResponse.json({ success: true, deleted });
-  } catch (error) {
+  } catch (_error) {
     return NextResponse.json({ error: 'Failed to delete PDF' }, { status: 500 });
   }
 }
