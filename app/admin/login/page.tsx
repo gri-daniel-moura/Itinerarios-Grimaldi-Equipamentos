@@ -29,8 +29,9 @@ export default function LoginPage() {
         const data = await res.json();
         setError(data.error || 'Invalid credentials');
       }
-    } catch {
-      setError('An error occurred during login');
+    } catch (err) {
+      console.error('Login error:', err);
+      setError('An error occurred during login. Please check connection.');
     } finally {
       setLoading(false);
     }
@@ -60,7 +61,7 @@ export default function LoginPage() {
               type="email"
               value={email}
               onChange={e => setEmail(e.target.value)}
-              className="w-full px-4 py-3 rounded-lg border border-slate-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all"
+              className="w-full px-4 py-3 rounded-lg border border-slate-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all text-slate-900 font-semibold shadow-sm"
               placeholder="admin@company.com"
               required
             />
