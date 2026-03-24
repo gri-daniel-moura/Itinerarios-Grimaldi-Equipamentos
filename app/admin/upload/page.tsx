@@ -79,8 +79,8 @@ export default function UploadPage() {
         router.push('/admin/dashboard');
       }, 500);
 
-    } catch (err: any) {
-      alert(`Upload failed: ${err.message}`);
+    } catch (err: unknown) {
+      alert(`Upload failed: ${(err as Error).message}`);
       setUploading(false);
       setProgress(0);
     }

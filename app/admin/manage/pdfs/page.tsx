@@ -1,8 +1,7 @@
 "use client";
 
 import { useState, useEffect } from 'react';
-import { Trash2, ToggleLeft, ToggleRight, FileBarChart, ExternalLink } from 'lucide-react';
-import Link from 'next/link';
+import { Trash2, ToggleLeft, ToggleRight, ExternalLink } from 'lucide-react';
 
 type Location = { id: string; name: string };
 type PdfFile = { 
@@ -30,7 +29,7 @@ export default function ManagePdfsPage() {
       ]);
       setPdfs(pdfRes);
       setLocations(locRes);
-    } catch (err) {
+    } catch {
       alert('Failed to fetch data');
     } finally {
       setLoading(false);
@@ -50,8 +49,8 @@ export default function ManagePdfsPage() {
       });
       if (!res.ok) throw new Error('Failed to update status');
       fetchData();
-    } catch (err: any) {
-      alert(err.message);
+    } catch (err: unknown) {
+      alert((err as Error).message);
     }
   };
 
@@ -61,8 +60,8 @@ export default function ManagePdfsPage() {
       const res = await fetch(`/api/pdfs?id=${id}`, { method: 'DELETE' });
       if (!res.ok) throw new Error('Failed to delete file records');
       fetchData();
-    } catch (err: any) {
-      alert(err.message);
+    } catch (err: unknown) {
+      alert((err as Error).message);
     }
   };
 

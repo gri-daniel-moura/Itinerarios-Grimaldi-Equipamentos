@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
@@ -28,7 +29,7 @@ export default function LoginPage() {
         const data = await res.json();
         setError(data.error || 'Invalid credentials');
       }
-    } catch (err) {
+    } catch {
       setError('An error occurred during login');
     } finally {
       setLoading(false);
@@ -39,7 +40,7 @@ export default function LoginPage() {
     <div className="fixed inset-0 flex items-center justify-center bg-slate-100 z-50">
       <div className="max-w-md w-full mx-4 bg-white p-8 rounded-2xl shadow-xl">
         <div className="mb-6 flex justify-center">
-          <img src="/GrimaldiLogo.jpg" alt="Grimaldi Logo" className="h-16 w-auto rounded" />
+          <Image src="/GrimaldiLogo.jpg" alt="Grimaldi Logo" width={160} height={64} className="h-16 w-auto rounded" />
         </div>
         <h1 className="text-2xl font-bold text-slate-900 mb-2 text-center">HR Admin Login</h1>
         <p className="text-slate-500 mb-8 text-center">Sign in to manage itinerary PDFs</p>

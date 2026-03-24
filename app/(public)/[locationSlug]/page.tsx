@@ -38,7 +38,7 @@ export default async function LocationPdfsPage({ params }: { params: { locationS
           <div className="text-center p-8 bg-white rounded-xl border border-slate-200 shadow-sm mt-8">
             <FileText className="mx-auto h-12 w-12 text-slate-300 mb-3" />
             <h3 className="text-sm font-medium text-slate-900">No documents found</h3>
-            <p className="text-sm text-slate-500 mt-1">HR hasn't uploaded any PDFs for this unit yet.</p>
+            <p className="text-sm text-slate-500 mt-1">HR hasn&apos;t uploaded any PDFs for this unit yet.</p>
           </div>
         ) : (
           activePdfs.map((pdf) => (

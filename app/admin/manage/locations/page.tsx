@@ -21,7 +21,7 @@ export default function ManageLocationsPage() {
       const res = await fetch('/api/locations');
       const data = await res.json();
       setLocations(data);
-    } catch (err) {
+    } catch {
       setError('Failed to fetch locations');
     } finally {
       setLoading(false);
@@ -53,8 +53,8 @@ export default function ManageLocationsPage() {
       setFormName('');
       setEditingId(null);
       fetchLocations();
-    } catch (err: any) {
-      alert(err.message);
+    } catch (err: unknown) {
+      alert((err as Error).message);
     }
   };
 
@@ -65,8 +65,8 @@ export default function ManageLocationsPage() {
       const res = await fetch(`/api/locations?id=${id}`, { method: 'DELETE' });
       if (!res.ok) throw new Error('Failed to delete, may be in use by PDFs.');
       fetchLocations();
-    } catch (err: any) {
-      alert(err.message);
+    } catch (err: unknown) {
+      alert((err as Error).message);
     }
   };
 

@@ -5,11 +5,11 @@ import { eq, desc } from 'drizzle-orm';
 import { cookies } from 'next/headers';
 import { verifyToken } from '@/lib/auth';
 
-async function getAdminEmail() {
+async function getAdminEmail(): Promise<string> {
   const token = cookies().get('admin_token')?.value;
   if (!token) return 'system';
   const decoded = await verifyToken(token);
-  return decoded ? decoded.email : 'system';
+  return decoded && typeof decoded.email === 'string' ? decoded.email : 'system';
 }
 
 export async function GET(req: Request) {
@@ -31,7 +31,7 @@ export async function GET(req: Request) {
     }
 
     return NextResponse.json(results);
-  } catch (_error) {
+  } catch {
     return NextResponse.json({ error: 'Failed to fetch PDFs' }, { status: 500 });
   }
 }
@@ -61,7 +61,7 @@ export async function POST(req: Request) {
     });
 
     return NextResponse.json(newPdf);
-  } catch (_error) {
+  } catch {
     return NextResponse.json({ error: 'Failed to create PDF record' }, { status: 500 });
   }
 }
@@ -92,7 +92,7 @@ export async function PUT(req: Request) {
     });
 
     return NextResponse.json(updated);
-  } catch (_error) {
+  } catch {
     return NextResponse.json({ error: 'Failed to update PDF' }, { status: 500 });
   }
 }
@@ -114,7 +114,7 @@ export async function DELETE(req: Request) {
     });
 
     return NextResponse.json({ success: true, deleted });
-  } catch (_error) {
+  } catch {
     return NextResponse.json({ error: 'Failed to delete PDF' }, { status: 500 });
   }
 }

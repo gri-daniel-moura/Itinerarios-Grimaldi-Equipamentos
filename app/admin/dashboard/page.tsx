@@ -1,6 +1,6 @@
 import { db } from '@/lib/db';
 import { locations, pdfFiles } from '@/lib/schema';
-import { desc, eq, sql } from 'drizzle-orm';
+import { desc } from 'drizzle-orm';
 import Link from 'next/link';
 
 export const dynamic = 'force-dynamic';

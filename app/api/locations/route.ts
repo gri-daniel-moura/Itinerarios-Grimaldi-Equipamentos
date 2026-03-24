@@ -14,18 +14,18 @@ function slugify(text: string) {
     .replace(/-+$/, '');       // Trim - from end of text
 }
 
-async function getAdminEmail() {
+async function getAdminEmail(): Promise<string> {
   const token = cookies().get('admin_token')?.value;
   if (!token) return 'system';
   const decoded = await verifyToken(token);
-  return decoded ? decoded.email : 'system';
+  return decoded && typeof decoded.email === 'string' ? decoded.email : 'system';
 }
 
 export async function GET() {
   try {
     const data = await db.select().from(locations).orderBy(locations.name);
     return NextResponse.json(data);
-  } catch (error) {
+  } catch {
     return NextResponse.json({ error: 'Failed to fetch locations' }, { status: 500 });
   }
 }
@@ -48,8 +48,8 @@ export async function POST(req: Request) {
     });
 
     return NextResponse.json(newLocation);
-  } catch (error: any) {
-    if (error.code === '23505') {
+  } catch (error: unknown) {
+    if (error && typeof error === 'object' && 'code' in error && error.code === '23505') {
       return NextResponse.json({ error: 'Location with this name/slug already exists' }, { status: 400 });
     }
     return NextResponse.json({ error: 'Failed to create location' }, { status: 500 });
@@ -74,7 +74,7 @@ export async function PUT(req: Request) {
     });
 
     return NextResponse.json(updated);
-  } catch (error) {
+  } catch {
     return NextResponse.json({ error: 'Failed to update location' }, { status: 500 });
   }
 }
@@ -96,7 +96,7 @@ export async function DELETE(req: Request) {
     });
 
     return NextResponse.json({ success: true, deleted });
-  } catch (error) {
+  } catch {
     return NextResponse.json({ error: 'Failed to delete location. It may be in use.' }, { status: 500 });
   }
 }

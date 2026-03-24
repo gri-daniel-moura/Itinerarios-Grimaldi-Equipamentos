@@ -10,7 +10,7 @@ export async function POST(request: Request): Promise<NextResponse> {
     const jsonResponse = await handleUpload({
       body,
       request,
-      onBeforeGenerateToken: async (_pathname) => {
+      onBeforeGenerateToken: async () => {
         // Only allow authenticated admins to upload
         const adminToken = cookies().get('admin_token')?.value;
         if (!adminToken) throw new Error('Unauthorized');
