@@ -81,7 +81,7 @@ export default function ManagePdfsPage() {
           <select 
             value={filterLocation} 
             onChange={e => setFilterLocation(e.target.value)}
-            className="px-4 py-2 border border-slate-200 rounded-lg outline-none focus:ring-2 focus:ring-blue-500 bg-white"
+            className="px-4 py-2 border border-slate-300 rounded-lg outline-none focus:ring-2 focus:ring-blue-500 bg-white text-slate-900 font-medium shadow-sm"
           >
             <option value="">All Locations</option>
             {locations.map(loc => (

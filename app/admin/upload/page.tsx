@@ -102,7 +102,7 @@ export default function UploadPage() {
               required
               value={locationId}
               onChange={e => setLocationId(e.target.value)}
-              className="w-full px-4 py-3 rounded-lg border border-slate-200 focus:ring-2 focus:ring-blue-500 bg-white outline-none"
+              className="w-full px-4 py-3 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 bg-white outline-none text-slate-900 font-medium shadow-sm"
             >
               {locations.map(loc => (
                 <option key={loc.id} value={loc.id}>{loc.name}</option>
@@ -119,7 +119,7 @@ export default function UploadPage() {
               value={title}
               onChange={e => setTitle(e.target.value)}
               placeholder="e.g., Fretado Rota 01 - Matutino"
-              className="w-full px-4 py-3 rounded-lg border border-slate-200 focus:ring-2 focus:ring-blue-500 outline-none"
+              className="w-full px-4 py-3 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 outline-none text-slate-900 font-medium shadow-sm"
             />
           </div>
 
@@ -129,7 +129,7 @@ export default function UploadPage() {
               value={description}
               onChange={e => setDescription(e.target.value)}
               placeholder="Any additional information..."
-              className="w-full px-4 py-3 rounded-lg border border-slate-200 focus:ring-2 focus:ring-blue-500 outline-none min-h-[100px]"
+              className="w-full px-4 py-3 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 outline-none min-h-[100px] text-slate-900 font-medium shadow-sm"
             />
           </div>
 
