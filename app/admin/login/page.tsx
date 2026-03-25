@@ -24,14 +24,15 @@ export default function LoginPage() {
       });
 
       if (res.ok) {
+        router.refresh();
         router.push('/admin/dashboard');
       } else {
         const data = await res.json();
-        setError(data.error || 'Invalid credentials');
+        setError(data.error || 'Credenciais inválidas');
       }
     } catch (err) {
       console.error('Login error:', err);
-      setError('An error occurred during login. Please check connection.');
+      setError('Ocorreu um erro durante o login. Verifique sua conexão.');
     } finally {
       setLoading(false);
     }
@@ -43,8 +44,8 @@ export default function LoginPage() {
         <div className="mb-6 flex justify-center">
           <Image src="/GrimaldiLogo.jpg" alt="Grimaldi Logo" width={160} height={64} className="h-16 w-auto rounded" />
         </div>
-        <h1 className="text-2xl font-bold text-slate-900 mb-2 text-center">HR Admin Login</h1>
-        <p className="text-slate-500 mb-8 text-center">Sign in to manage itinerary PDFs</p>
+        <h1 className="text-2xl font-bold text-slate-900 mb-2 text-center">Acesso - Admin RH</h1>
+        <p className="text-slate-500 mb-8 text-center">Faça login para gerenciar os PDFs de itinerários</p>
 
         <form onSubmit={handleLogin} className="space-y-6">
           {error && (
@@ -55,7 +56,7 @@ export default function LoginPage() {
           
           <div>
             <label className="block text-sm font-medium text-slate-700 mb-2">
-              Email Address
+              E-mail
             </label>
             <input
               type="email"
@@ -69,7 +70,7 @@ export default function LoginPage() {
 
           <div>
             <label className="block text-sm font-medium text-slate-700 mb-2">
-              Password
+              Senha
             </label>
             <input
               type="password"
@@ -92,7 +93,7 @@ export default function LoginPage() {
                 <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
               </svg>
             ) : (
-              'Sign In'
+              'Entrar'
             )}
           </button>
         </form>

@@ -37,7 +37,7 @@ export default function UploadPage() {
     if (!file || !locationId || !title) return;
 
     if (file.size > 15 * 1024 * 1024) {
-      alert("File is too large. Max 15MB allowed.");
+      alert("Arquivo muito grande. Máximo de 15MB permitido.");
       return;
     }
 
@@ -83,7 +83,7 @@ export default function UploadPage() {
       }, 500);
 
     } catch (err: unknown) {
-      alert(`Upload failed: ${(err as Error).message}`);
+      alert(`Falha no envio: ${(err as Error).message}`);
       setUploading(false);
       setProgress(0);
     }
@@ -91,7 +91,7 @@ export default function UploadPage() {
 
   return (
     <div className="p-8 max-w-3xl">
-      <h1 className="text-2xl font-bold text-slate-900 mb-8">Upload Itinerary PDF</h1>
+      <h1 className="text-2xl font-bold text-slate-900 mb-8">Enviar PDF de Itinerário</h1>
 
       {loading ? (
         <div className="animate-pulse flex space-x-4">
@@ -100,7 +100,7 @@ export default function UploadPage() {
       ) : (
         <form onSubmit={handleUpload} className="bg-white p-8 rounded-xl shadow-sm border border-slate-100 space-y-6">
           <div>
-            <label className="block text-sm font-medium text-slate-700 mb-2">Location Unit *</label>
+            <label className="block text-sm font-medium text-slate-700 mb-2">Unidade *</label>
             <select
               required
               value={locationId}
@@ -111,33 +111,33 @@ export default function UploadPage() {
                 <option key={loc.id} value={loc.id}>{loc.name}</option>
               ))}
             </select>
-            {locations.length === 0 && <p className="text-sm text-red-500 mt-2">You must add a location first!</p>}
+            {locations.length === 0 && <p className="text-sm text-red-500 mt-2">Você deve adicionar uma unidade primeiro!</p>}
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-slate-700 mb-2">Document Title *</label>
+            <label className="block text-sm font-medium text-slate-700 mb-2">Título do Documento *</label>
             <input
               type="text"
               required
               value={title}
               onChange={e => setTitle(e.target.value)}
-              placeholder="e.g., Fretado Rota 01 - Matutino"
+              placeholder="ex: Fretado Rota 01 - Matutino"
               className="w-full px-4 py-3 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 outline-none text-slate-900 font-medium shadow-sm"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-slate-700 mb-2">Description / Notes</label>
+            <label className="block text-sm font-medium text-slate-700 mb-2">Descrição / Observações</label>
             <textarea
               value={description}
               onChange={e => setDescription(e.target.value)}
-              placeholder="Any additional information..."
+              placeholder="Qualquer informação adicional..."
               className="w-full px-4 py-3 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 outline-none min-h-[100px] text-slate-900 font-medium shadow-sm"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-slate-700 mb-2">PDF File * (Max 15MB)</label>
+            <label className="block text-sm font-medium text-slate-700 mb-2">Arquivo PDF * (Máx 15MB)</label>
             <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-slate-300 border-dashed rounded-lg hover:bg-slate-50 transition-colors">
               <div className="space-y-1 text-center">
                 <svg className="mx-auto h-12 w-12 text-slate-400" stroke="currentColor" fill="none" viewBox="0 0 48 48">
@@ -145,7 +145,7 @@ export default function UploadPage() {
                 </svg>
                 <div className="flex text-sm text-slate-600 justify-center">
                   <label className="relative cursor-pointer bg-white rounded-md font-medium text-blue-600 hover:text-blue-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-blue-500">
-                    <span>Upload a file</span>
+                    <span>Escolha um arquivo</span>
                     <input 
                       ref={fileInputRef}
                       type="file" 
@@ -154,10 +154,10 @@ export default function UploadPage() {
                       onChange={e => setFile(e.target.files?.[0] || null)}
                     />
                   </label>
-                  <p className="pl-1">or drag and drop</p>
+                  <p className="pl-1">ou arraste e solte</p>
                 </div>
                 <p className="text-xs text-slate-500">
-                  {file ? <span className="font-semibold text-slate-900">{file.name} ({(file.size/1024/1024).toFixed(2)}MB)</span> : "PDF files only up to 15MB"}
+                  {file ? <span className="font-semibold text-slate-900">{file.name} ({(file.size/1024/1024).toFixed(2)}MB)</span> : "Apenas arquivos PDF de até 15MB"}
                 </p>
               </div>
             </div>
@@ -175,7 +175,7 @@ export default function UploadPage() {
               disabled={uploading || locations.length === 0 || !file}
               className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-8 rounded-lg transition-colors flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {uploading ? 'Uploading...' : 'Save & Publish'}
+              {uploading ? 'Enviando...' : 'Salvar e Publicar'}
             </button>
           </div>
         </form>

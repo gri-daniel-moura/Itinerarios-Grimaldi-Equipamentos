@@ -9,10 +9,10 @@ export default function AdminNav() {
   const pathname = usePathname();
 
   const navItems = [
-    { name: 'Dashboard', href: '/admin/dashboard', icon: LayoutDashboard },
-    { name: 'Upload PDF', href: '/admin/upload', icon: UploadCloud },
-    { name: 'Manage Locations', href: '/admin/manage/locations', icon: MapPin },
-    { name: 'Manage PDFs', href: '/admin/manage/pdfs', icon: FileText },
+    { name: 'Painel', href: '/admin/dashboard', icon: LayoutDashboard },
+    { name: 'Enviar PDF', href: '/admin/upload', icon: UploadCloud },
+    { name: 'Gerenciar Unidades', href: '/admin/manage/locations', icon: MapPin },
+    { name: 'Gerenciar PDFs', href: '/admin/manage/pdfs', icon: FileText },
   ];
 
   return (
@@ -47,7 +47,7 @@ export default function AdminNav() {
           className="flex items-center space-x-3 px-4 py-3 rounded-lg w-full text-slate-400 hover:text-white hover:bg-slate-800/50 transition-colors"
         >
           <LogOut size={20} />
-          <span className="font-medium">Logout</span>
+          <span className="font-medium">Sair</span>
         </button>
       </div>
     </div>

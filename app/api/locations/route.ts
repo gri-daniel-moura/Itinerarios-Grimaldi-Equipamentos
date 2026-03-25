@@ -27,7 +27,7 @@ export async function GET() {
     const data = await db.select().from(locations).orderBy(locations.name);
     return NextResponse.json(data);
   } catch {
-    return NextResponse.json({ error: 'Failed to fetch locations' }, { status: 500 });
+    return NextResponse.json({ error: 'Falha ao buscar unidades' }, { status: 500 });
   }
 }
 
@@ -35,7 +35,7 @@ export async function POST(req: Request) {
   try {
     const body = await req.json();
     const { name } = body;
-    if (!name) return NextResponse.json({ error: 'Name is required' }, { status: 400 });
+    if (!name) return NextResponse.json({ error: 'Nome é obrigatório' }, { status: 400 });
 
     const slug = slugify(name);
     const [newLocation] = await db.insert(locations).values({ name, slug }).returning();
@@ -52,9 +52,9 @@ export async function POST(req: Request) {
     return NextResponse.json(newLocation);
   } catch (error: unknown) {
     if (error && typeof error === 'object' && 'code' in error && error.code === '23505') {
-      return NextResponse.json({ error: 'Location with this name/slug already exists' }, { status: 400 });
+      return NextResponse.json({ error: 'Unidade com esse nome já existe' }, { status: 400 });
     }
-    return NextResponse.json({ error: 'Failed to create location' }, { status: 500 });
+    return NextResponse.json({ error: 'Falha ao criar unidade' }, { status: 500 });
   }
 }
 
@@ -62,7 +62,7 @@ export async function PUT(req: Request) {
   try {
     const body = await req.json();
     const { id, name } = body;
-    if (!id || !name) return NextResponse.json({ error: 'ID and Name are required' }, { status: 400 });
+    if (!id || !name) return NextResponse.json({ error: 'ID e Nome são obrigatórios' }, { status: 400 });
 
     const slug = slugify(name);
     const [updated] = await db.update(locations).set({ name, slug }).where(eq(locations.id, id)).returning();
@@ -79,7 +79,7 @@ export async function PUT(req: Request) {
     revalidatePath(`/${updated.slug}`);
     return NextResponse.json(updated);
   } catch {
-    return NextResponse.json({ error: 'Failed to update location' }, { status: 500 });
+    return NextResponse.json({ error: 'Falha ao atualizar unidade' }, { status: 500 });
   }
 }
 
@@ -87,7 +87,7 @@ export async function DELETE(req: Request) {
   try {
     const { searchParams } = new URL(req.url);
     const id = searchParams.get('id');
-    if (!id) return NextResponse.json({ error: 'ID is required' }, { status: 400 });
+    if (!id) return NextResponse.json({ error: 'ID é obrigatório' }, { status: 400 });
 
     const [deleted] = await db.delete(locations).where(eq(locations.id, id)).returning();
 
@@ -103,6 +103,6 @@ export async function DELETE(req: Request) {
     revalidatePath(`/${deleted.slug}`);
     return NextResponse.json({ success: true, deleted });
   } catch {
-    return NextResponse.json({ error: 'Failed to delete location. It may be in use.' }, { status: 500 });
+    return NextResponse.json({ error: 'Falha ao excluir a unidade. Ela pode estar em uso.' }, { status: 500 });
   }
 }

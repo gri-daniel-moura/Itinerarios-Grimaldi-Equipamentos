@@ -9,7 +9,7 @@ export default function PublicLayout({ children }: { children: ReactNode }) {
         <div className="max-w-md mx-auto px-4 h-16 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-3 hover:opacity-80 transition-opacity">
             <Image src="/GrimaldiLogo.jpg" alt="Grimaldi Logo" width={100} height={40} className="h-10 w-auto rounded" />
-            <span className="font-bold text-lg tracking-tight">Rota Express</span>
+            <span className="font-bold text-lg tracking-tight">Itinerários - Grimaldi</span>
           </Link>
         </div>
       </header>

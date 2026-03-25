@@ -30,7 +30,7 @@ export default function ManagePdfsPage() {
       setPdfs(pdfRes);
       setLocations(locRes);
     } catch {
-      alert('Failed to fetch data');
+      alert('Falha ao carregar dados');
     } finally {
       setLoading(false);
     }
@@ -47,7 +47,7 @@ export default function ManagePdfsPage() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ id: pdf.id, isActive: !pdf.isActive }),
       });
-      if (!res.ok) throw new Error('Failed to update status');
+      if (!res.ok) throw new Error('Falha ao atualizar o status');
       fetchData();
     } catch (err: unknown) {
       alert((err as Error).message);
@@ -55,10 +55,10 @@ export default function ManagePdfsPage() {
   };
 
   const handleDelete = async (id: string, title: string) => {
-    if (!confirm(`Are you sure you want to completely delete "${title}"? This cannot be undone.`)) return;
+    if (!confirm(`Tem certeza que deseja excluir completamente "${title}"? Isso não pode ser desfeito.`)) return;
     try {
       const res = await fetch(`/api/pdfs?id=${id}`, { method: 'DELETE' });
-      if (!res.ok) throw new Error('Failed to delete file records');
+      if (!res.ok) throw new Error('Falha ao excluir o registro');
       fetchData();
     } catch (err: unknown) {
       alert((err as Error).message);
@@ -69,13 +69,13 @@ export default function ManagePdfsPage() {
     ? pdfs.filter(p => p.locationId === filterLocation) 
     : pdfs;
 
-  const getLocationName = (id: string) => locations.find(l => l.id === id)?.name || 'Unknown';
+  const getLocationName = (id: string) => locations.find(l => l.id === id)?.name || 'Desconhecido';
   const formatSize = (bytes: number) => (bytes / (1024 * 1024)).toFixed(2) + ' MB';
 
   return (
     <div className="p-8">
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
-        <h1 className="text-2xl font-bold text-slate-900">Manage PDFs</h1>
+        <h1 className="text-2xl font-bold text-slate-900">Gerenciar PDFs</h1>
         
         <div className="flex gap-4">
           <select 
@@ -83,7 +83,7 @@ export default function ManagePdfsPage() {
             onChange={e => setFilterLocation(e.target.value)}
             className="px-4 py-2 border border-slate-300 rounded-lg outline-none focus:ring-2 focus:ring-blue-500 bg-white text-slate-900 font-medium shadow-sm"
           >
-            <option value="">All Locations</option>
+            <option value="">Todas as Unidades</option>
             {locations.map(loc => (
               <option key={loc.id} value={loc.id}>{loc.name}</option>
             ))}
@@ -96,20 +96,20 @@ export default function ManagePdfsPage() {
           <div className="animate-spin h-8 w-8 border-4 border-blue-600 border-t-transparent rounded-full"></div>
         </div>
       ) : (
-        <div className="bg-white rounded-xl shadow-sm border border-slate-100 overflow-hidden">
-          <table className="w-full text-left">
+        <div className="bg-white rounded-xl shadow-sm border border-slate-100 overflow-hidden overflow-x-auto">
+          <table className="w-full text-left min-w-[600px]">
             <thead className="bg-slate-50 border-b border-slate-100">
               <tr>
-                <th className="px-6 py-3 text-sm font-medium text-slate-500">Title & Location</th>
-                <th className="px-6 py-3 text-sm font-medium text-slate-500 hidden md:table-cell">File Info</th>
+                <th className="px-6 py-3 text-sm font-medium text-slate-500">Título e Unidade</th>
+                <th className="px-6 py-3 text-sm font-medium text-slate-500 hidden md:table-cell">Info do Arquivo</th>
                 <th className="px-6 py-3 text-sm font-medium text-slate-500">Status</th>
-                <th className="px-6 py-3 text-sm font-medium text-slate-500 text-right">Actions</th>
+                <th className="px-6 py-3 text-sm font-medium text-slate-500 text-right">Ações</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-100">
               {filteredPdfs.length === 0 && (
                 <tr>
-                  <td colSpan={4} className="px-6 py-8 text-center text-slate-500">No PDFs found for this criteria.</td>
+                  <td colSpan={4} className="px-6 py-8 text-center text-slate-500">Nenhum PDF encontrado para estes critérios.</td>
                 </tr>
               )}
               {filteredPdfs.map((pdf) => (
@@ -127,27 +127,27 @@ export default function ManagePdfsPage() {
                   <td className="px-6 py-4">
                     {pdf.isActive ? (
                       <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                        Active
+                        Ativo
                       </span>
                     ) : (
                       <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-slate-100 text-slate-800">
-                        Hidden
+                        Oculto
                       </span>
                     )}
                   </td>
                   <td className="px-6 py-4 text-right">
                     <div className="flex justify-end gap-3 items-center">
-                      <a href={pdf.fileUrl} target="_blank" rel="noreferrer" title="Open File" className="text-slate-400 hover:text-blue-600 transition-colors">
+                      <a href={pdf.fileUrl} target="_blank" rel="noreferrer" title="Abrir Arquivo" className="text-slate-400 hover:text-blue-600 transition-colors">
                         <ExternalLink size={18} />
                       </a>
                       <button 
                         onClick={() => handleToggleActive(pdf)} 
-                        title={pdf.isActive ? "Deactivate" : "Activate"}
+                        title={pdf.isActive ? "Desativar" : "Ativar"}
                         className={`transition-colors ${pdf.isActive ? 'text-slate-400 hover:text-orange-600' : 'text-orange-500 hover:text-orange-700'}`}
                       >
                         {pdf.isActive ? <ToggleRight size={22} className="text-green-500 hover:text-orange-500" /> : <ToggleLeft size={22} />}
                       </button>
-                      <button onClick={() => handleDelete(pdf.id, pdf.title)} title="Delete" className="text-slate-400 hover:text-red-600 transition-colors">
+                      <button onClick={() => handleDelete(pdf.id, pdf.title)} title="Excluir" className="text-slate-400 hover:text-red-600 transition-colors">
                         <Trash2 size={18} />
                       </button>
                     </div>

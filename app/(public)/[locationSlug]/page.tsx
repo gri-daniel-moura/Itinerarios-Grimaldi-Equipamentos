@@ -25,20 +25,20 @@ export default async function LocationPdfsPage({ params }: { params: { locationS
   return (
     <div className="p-4 pt-6 pb-20">
       <Link href="/" className="inline-flex items-center text-sm font-medium text-blue-600 hover:text-blue-800 mb-6 transition-colors">
-        <ArrowLeft size={16} className="mr-1" /> Back to Locations
+        <ArrowLeft size={16} className="mr-1" /> Voltar para as Unidades
       </Link>
       
       <div className="mb-6">
         <h1 className="text-2xl font-bold text-slate-900 leading-tight mb-2">{location.name}</h1>
-        <p className="text-slate-500">Available itineraries and schedules.</p>
+        <p className="text-slate-500">Itinerários e horários disponíveis.</p>
       </div>
 
       <div className="space-y-4">
         {activePdfs.length === 0 ? (
           <div className="text-center p-8 bg-white rounded-xl border border-slate-200 shadow-sm mt-8">
             <FileText className="mx-auto h-12 w-12 text-slate-300 mb-3" />
-            <h3 className="text-sm font-medium text-slate-900">No documents found</h3>
-            <p className="text-sm text-slate-500 mt-1">HR hasn&apos;t uploaded any PDFs for this unit yet.</p>
+            <h3 className="text-sm font-medium text-slate-900">Nenhum documento encontrado</h3>
+            <p className="text-sm text-slate-500 mt-1">O RH ainda não enviou nenhum PDF para esta unidade.</p>
           </div>
         ) : (
           activePdfs.map((pdf) => (
@@ -55,7 +55,7 @@ export default async function LocationPdfsPage({ params }: { params: { locationS
               )}
 
               <div className="flex items-center justify-between text-xs text-slate-400 mb-4">
-                <span>Updated: {new Date(pdf.updatedAt).toLocaleDateString()}</span>
+                <span>Atualizado: {new Date(pdf.updatedAt).toLocaleDateString()}</span>
               </div>
 
               <div className="flex gap-3">
@@ -63,7 +63,7 @@ export default async function LocationPdfsPage({ params }: { params: { locationS
                   href={`/${params.locationSlug}/${pdf.id}`}
                   className="flex-1 bg-blue-50 text-blue-700 hover:bg-blue-100 font-medium py-3 rounded-lg flex items-center justify-center gap-2 transition-colors active:scale-[0.98]"
                 >
-                  <Eye size={18} /> View
+                  <Eye size={18} /> Ver
                 </Link>
                 <a 
                   href={pdf.fileUrl}
@@ -71,7 +71,7 @@ export default async function LocationPdfsPage({ params }: { params: { locationS
                   download
                   rel="noreferrer"
                   className="flex-none bg-slate-50 text-slate-700 hover:bg-slate-100 font-medium py-3 px-4 rounded-lg flex items-center justify-center transition-colors active:scale-[0.98]"
-                  title="Download File directly"
+                  title="Baixar Arquivo"
                 >
                   <Download size={18} />
                 </a>

@@ -34,7 +34,7 @@ export async function GET(req: Request) {
 
     return NextResponse.json(results);
   } catch {
-    return NextResponse.json({ error: 'Failed to fetch PDFs' }, { status: 500 });
+    return NextResponse.json({ error: 'Falha ao buscar PDFs' }, { status: 500 });
   }
 }
 
@@ -70,7 +70,7 @@ export async function POST(req: Request) {
 
     return NextResponse.json(newPdf);
   } catch {
-    return NextResponse.json({ error: 'Failed to create PDF record' }, { status: 500 });
+    return NextResponse.json({ error: 'Falha ao salvar o PDF no banco de dados' }, { status: 500 });
   }
 }
 
@@ -78,7 +78,7 @@ export async function PUT(req: Request) {
   try {
     const body = await req.json();
     const { id, title, description, isActive, locationId } = body;
-    if (!id) return NextResponse.json({ error: 'ID is required' }, { status: 400 });
+    if (!id) return NextResponse.json({ error: 'ID é obrigatório' }, { status: 400 });
 
     const [updated] = await db.update(pdfFiles)
       .set({ 
@@ -106,7 +106,7 @@ export async function PUT(req: Request) {
 
     return NextResponse.json(updated);
   } catch {
-    return NextResponse.json({ error: 'Failed to update PDF' }, { status: 500 });
+    return NextResponse.json({ error: 'Falha ao atualizar o PDF' }, { status: 500 });
   }
 }
 
@@ -114,7 +114,7 @@ export async function DELETE(req: Request) {
   try {
     const { searchParams } = new URL(req.url);
     const id = searchParams.get('id');
-    if (!id) return NextResponse.json({ error: 'ID is required' }, { status: 400 });
+    if (!id) return NextResponse.json({ error: 'ID é obrigatório' }, { status: 400 });
 
     const [deleted] = await db.delete(pdfFiles).where(eq(pdfFiles.id, id)).returning();
 
@@ -133,6 +133,6 @@ export async function DELETE(req: Request) {
 
     return NextResponse.json({ success: true, deleted });
   } catch {
-    return NextResponse.json({ error: 'Failed to delete PDF' }, { status: 500 });
+    return NextResponse.json({ error: 'Falha ao excluir o PDF' }, { status: 500 });
   }
 }

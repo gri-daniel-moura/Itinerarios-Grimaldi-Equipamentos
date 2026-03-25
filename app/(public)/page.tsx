@@ -11,16 +11,16 @@ export default async function HomePage() {
   return (
     <div className="p-4 pt-6">
       <div className="mb-6">
-        <h1 className="text-2xl font-bold text-slate-900 leading-tight mb-2">Select Your Unit</h1>
-        <p className="text-slate-500">Choose your location to view available transport itineraries and bus schedules.</p>
+        <h1 className="text-2xl font-bold text-slate-900 leading-tight mb-2">Selecione Sua Unidade</h1>
+        <p className="text-slate-500">Escolha sua localidade para ver os itinerários de transporte e os horários dos ônibus disponíveis.</p>
       </div>
 
       <div className="space-y-3">
         {allLocations.length === 0 ? (
           <div className="text-center p-8 bg-white rounded-xl border border-slate-200">
             <MapPin className="mx-auto h-12 w-12 text-slate-300 mb-3" />
-            <h3 className="text-sm font-medium text-slate-900">No locations found</h3>
-            <p className="text-sm text-slate-500 mt-1">Check back later or contact HR.</p>
+            <h3 className="text-sm font-medium text-slate-900">Nenhuma unidade encontrada</h3>
+            <p className="text-sm text-slate-500 mt-1">Volte mais tarde ou contate o RH.</p>
           </div>
         ) : (
           allLocations.map((loc) => (
@@ -36,7 +36,7 @@ export default async function HomePage() {
                   </div>
                   <div>
                     <h2 className="text-lg font-bold text-slate-800 group-hover:text-blue-700 transition-colors">{loc.name}</h2>
-                    <p className="text-sm text-slate-500 mt-0.5">View itineraries</p>
+                    <p className="text-sm text-slate-500 mt-0.5">Ver itinerários</p>
                   </div>
                 </div>
                 <ChevronRight className="text-slate-300 group-hover:text-blue-500 transition-colors" size={24} />

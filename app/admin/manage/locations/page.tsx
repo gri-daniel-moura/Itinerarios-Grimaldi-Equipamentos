@@ -22,7 +22,7 @@ export default function ManageLocationsPage() {
       const data = await res.json();
       setLocations(data);
     } catch {
-      setError('Failed to fetch locations');
+      setError('Falha ao carregar unidades');
     } finally {
       setLoading(false);
     }
@@ -46,7 +46,7 @@ export default function ManageLocationsPage() {
 
       if (!res.ok) {
         const data = await res.json();
-        throw new Error(data.error || 'Failed to save location');
+        throw new Error(data.error || 'Falha ao salvar unidade');
       }
 
       setIsModalOpen(false);
@@ -59,11 +59,11 @@ export default function ManageLocationsPage() {
   };
 
   const handleDelete = async (id: string, name: string) => {
-    if (!confirm(`Are you sure you want to delete ${name}?`)) return;
+    if (!confirm(`Tem certeza que deseja excluir ${name}?`)) return;
 
     try {
       const res = await fetch(`/api/locations?id=${id}`, { method: 'DELETE' });
-      if (!res.ok) throw new Error('Failed to delete, may be in use by PDFs.');
+      if (!res.ok) throw new Error('Falha ao excluir, pode estar em uso por PDFs.');
       fetchLocations();
     } catch (err: unknown) {
       alert((err as Error).message);
@@ -84,12 +84,12 @@ export default function ManageLocationsPage() {
   return (
     <div className="p-8">
       <div className="flex justify-between items-center mb-8">
-        <h1 className="text-2xl font-bold text-slate-900">Manage Locations</h1>
+        <h1 className="text-2xl font-bold text-slate-900">Gerenciar Unidades</h1>
         <button
           onClick={() => openModal()}
           className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-medium flex items-center gap-2"
         >
-          <Plus size={20} /> Add Location
+          <Plus size={20} /> Adicionar Unidade
         </button>
       </div>
 
@@ -100,19 +100,19 @@ export default function ManageLocationsPage() {
           <div className="animate-spin h-8 w-8 border-4 border-blue-600 border-t-transparent rounded-full"></div>
         </div>
       ) : (
-        <div className="bg-white rounded-xl shadow-sm border border-slate-100 overflow-hidden">
-          <table className="w-full text-left">
+        <div className="bg-white rounded-xl shadow-sm border border-slate-100 overflow-hidden overflow-x-auto">
+          <table className="w-full text-left min-w-[500px]">
             <thead className="bg-slate-50 border-b border-slate-100">
               <tr>
-                <th className="px-6 py-3 text-sm font-medium text-slate-500">Name</th>
+                <th className="px-6 py-3 text-sm font-medium text-slate-500">Nome</th>
                 <th className="px-6 py-3 text-sm font-medium text-slate-500">Slug</th>
-                <th className="px-6 py-3 text-sm font-medium text-slate-500 text-right">Actions</th>
+                <th className="px-6 py-3 text-sm font-medium text-slate-500 text-right">Ações</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-100">
               {locations.length === 0 && (
                 <tr>
-                  <td colSpan={3} className="px-6 py-8 text-center text-slate-500">No locations found.</td>
+                  <td colSpan={3} className="px-6 py-8 text-center text-slate-500">Nenhuma unidade encontrada.</td>
                 </tr>
               )}
               {locations.map((loc) => (
@@ -137,17 +137,17 @@ export default function ManageLocationsPage() {
       {isModalOpen && (
         <div className="fixed inset-0 bg-slate-900/50 flex items-center justify-center p-4 z-50">
           <div className="bg-white rounded-xl shadow-xl w-full max-w-md p-6">
-            <h2 className="text-xl font-bold mb-4">{editingId ? 'Edit Location' : 'Add Location'}</h2>
+            <h2 className="text-xl font-bold mb-4">{editingId ? 'Editar Unidade' : 'Adicionar Unidade'}</h2>
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-slate-700 mb-1">Location Name</label>
+                <label className="block text-sm font-medium text-slate-700 mb-1">Nome da Unidade</label>
                 <input
                   type="text"
                   required
                   value={formName}
                   onChange={e => setFormName(e.target.value)}
                   className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none text-slate-900 font-medium shadow-sm"
-                  placeholder="e.g. Unidade São Paulo"
+                  placeholder="ex: Unidade São Paulo"
                 />
               </div>
               <div className="flex justify-end gap-3 pt-4">
@@ -156,13 +156,13 @@ export default function ManageLocationsPage() {
                   onClick={() => setIsModalOpen(false)}
                   className="px-4 py-2 text-slate-600 hover:bg-slate-50 rounded-lg font-medium transition-colors"
                 >
-                  Cancel
+                  Cancelar
                 </button>
                 <button
                   type="submit"
                   className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-colors"
                 >
-                  Save
+                  Salvar
                 </button>
               </div>
             </form>
