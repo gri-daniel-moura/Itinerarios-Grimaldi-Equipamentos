@@ -2,6 +2,7 @@ import { db } from '@/lib/db';
 import { locations } from '@/lib/schema';
 import Link from 'next/link';
 import { MapPin, ChevronRight } from 'lucide-react';
+import WhatsAppButton from '@/components/WhatsAppButton';
 
 export const dynamic = 'force-dynamic'; // Prevent aggressive static caching if locations update frequently
 
@@ -45,6 +46,7 @@ export default async function HomePage() {
           ))
         )}
       </div>
+      <WhatsAppButton />
     </div>
   );
 }

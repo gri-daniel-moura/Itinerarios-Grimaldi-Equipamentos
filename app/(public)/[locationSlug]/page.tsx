@@ -4,6 +4,7 @@ import { eq, desc, and } from 'drizzle-orm';
 import Link from 'next/link';
 import { FileText, ArrowLeft, Download, Eye } from 'lucide-react';
 import { notFound } from 'next/navigation';
+import WhatsAppButton from '@/components/WhatsAppButton';
 
 export const dynamic = 'force-dynamic';
 
@@ -80,6 +81,7 @@ export default async function LocationPdfsPage({ params }: { params: { locationS
           ))
         )}
       </div>
+      <WhatsAppButton />
     </div>
   );
 }
